@@ -1,6 +1,9 @@
 open classical
 variables p q r s: Prop
 
+--------------
+-- example 1
+--------------
 example: p ∧ (q∨r) ↔ (p∧q) ∨ (p∧r) := 
 iff.intro
 -- proof of →:
@@ -32,6 +35,9 @@ iff.intro
     -- conjunction
     show p ∧ (q∨r), from and.intro Hp Hqvr)
 
+--------------
+-- example 2
+--------------
 example: ¬p∨¬q → ¬(p∧q) :=
 assume H : ¬p∨¬q,
 show ¬(p∧q), from or.elim H
@@ -43,3 +49,19 @@ show ¬(p∧q), from or.elim H
     show ¬(p∧q), from or.elim (em (p∧q))
         (assume Hpq : p∧q, absurd (and.right Hpq) Hnq)
         (assume Hnpq : ¬(p∧q), Hnpq))
+
+--------------
+-- example 3
+--------------
+example: (¬q → ¬p) → (p → q) :=
+assume H : (¬q → ¬p),
+assume Hp : p,
+show q, from or.elim (em q)
+    (assume Hq : q, Hq)
+    (assume Hnq : ¬q, 
+        absurd Hp (H Hnq))
+
+--------------
+-- example 4
+--------------
+example: (p → r ∨ s) → ((p → r) ∨ (p → s)) := sorry
