@@ -32,7 +32,15 @@ iff.intro
     -- conjunction
     show p ∧ (q∨r), from and.intro Hp Hqvr)
 
-example: ¬p ∨ ¬q → ¬(p∧q) := sorry
+example: ¬p∨¬q → ¬(p∧q) :=
+assume H : ¬p∨¬q,
+show ¬(p∧q), from or.elim H
+    (assume Hnp : ¬p,
+    show ¬(p∧q), from sorry)
+    (assume Hnq : ¬q,
+    show ¬(p∧q), from sorry)
+
+check ¬p
 
 example (Hp : p) (Hq : q) : p ∧ q := and.intro Hp Hq
 
