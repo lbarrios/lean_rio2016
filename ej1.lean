@@ -64,4 +64,14 @@ show q, from or.elim (em q)
 --------------
 -- example 4
 --------------
-example: (p → r ∨ s) → ((p → r) ∨ (p → s)) := sorry
+example: (p → r ∨ s) → ((p → r) ∨ (p → s)) :=
+assume H : (p → r ∨ s),
+show ((p → r) ∨ (p → s)), from or.elim (em (p → r))
+    (assume Hpr: (p → r),
+    show ((p → r) ∨ (p → s)), from or.intro_left (p → s) Hpr)
+    
+    (assume nHpr: ¬(p → r),
+    have Hps : (p → s), from or.elim (em (p → s))
+        (assume Hps : (p → s), Hps)
+        (sorry),
+    show ((p → r) ∨ (p → s)), from or.intro_right (p → r) Hps)
