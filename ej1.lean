@@ -73,5 +73,8 @@ show ((p → r) ∨ (p → s)), from or.elim (em (p → r))
     (assume nHpr: ¬(p → r),
     have Hps : (p → s), from or.elim (em (p → s))
         (assume Hps : (p → s), Hps)
-        (sorry),
+        (assume nHps : ¬(p → s),
+            have nHprps : ¬(p → r) ∧ ¬(p → s), from and.intro nHpr nHps,
+            have nH : ¬(p → r ∨ s), from sorry,
+            absurd H nH),
     show ((p → r) ∨ (p → s)), from or.intro_right (p → r) Hps)
