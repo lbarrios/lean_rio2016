@@ -36,12 +36,10 @@ example: ¬p∨¬q → ¬(p∧q) :=
 assume H : ¬p∨¬q,
 show ¬(p∧q), from or.elim H
     (assume Hnp : ¬p,
-    show ¬(p∧q), from sorry)
+    show ¬(p∧q), from or.elim (em (p∧q))
+        (assume Hpq : p∧q, absurd (and.left Hpq) Hnp)
+        (assume Hnpq : ¬(p∧q), Hnpq))
     (assume Hnq : ¬q,
-    show ¬(p∧q), from sorry)
-
-check ¬p
-
-example (Hp : p) (Hq : q) : p ∧ q := and.intro Hp Hq
-
-check assume (Hp : p) (Hq : q), and.intro Hp Hq
+    show ¬(p∧q), from or.elim (em (p∧q))
+        (assume Hpq : p∧q, absurd (and.right Hpq) Hnq)
+        (assume Hnpq : ¬(p∧q), Hnpq))
