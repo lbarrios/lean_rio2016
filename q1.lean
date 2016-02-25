@@ -61,20 +61,24 @@ show q, from or.elim (em q)
     (assume Hnq : ¬q, 
         absurd Hp (H Hnq))
 
+open classical
+variables p q r s: Prop
+
 --------------
 -- example 4
 --------------
 example: (p → r ∨ s) → ((p → r) ∨ (p → s)) :=
 assume H : (p → r ∨ s),
-show ((p → r) ∨ (p → s)), from or.elim (em (p → r))
-    (assume Hpr: (p → r),
-    show ((p → r) ∨ (p → s)), from or.intro_left (p → s) Hpr)
-    
-    (assume nHpr: ¬(p → r),
-    have Hps : (p → s), from or.elim (em (p → s))
-        (assume Hps : (p → s), Hps)
-        (assume nHps : ¬(p → s),
-            have nHprps : ¬(p → r) ∧ ¬(p → s), from and.intro nHpr nHps,
-            have nH : ¬(p → r ∨ s), from sorry,
-            absurd H nH),
-    show ((p → r) ∨ (p → s)), from or.intro_right (p → r) Hps)
+show (p → r) ∨ (p → s), from or.elim (em p)
+    (assume Hp: p,
+    have Hrvs: r∨s, from H Hp,
+    or.elim Hrvs
+        (assume Hr: r,
+        have Hpr: p→r, from (assume Hp: p, Hr),
+        or.inl Hpr)
+        (assume Hs: s,
+        have Hps: p→s, from (assume Hp: p, Hs),
+        or.inr Hps))
+    (assume Hnp: ¬p,
+    have Hpr: p → r, from (assume Hp: p, absurd Hp Hnp),
+    or.inl Hpr)
