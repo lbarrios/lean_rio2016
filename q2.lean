@@ -29,9 +29,12 @@ iff.intro
 example: (¬∀x, p x) ↔ (∃x, ¬ p x) := 
 iff.intro
     (assume H : ¬∀x, p x,
-    sorry)
-    (assume Q : ∃x, ¬ p x,
-    sorry)
+    exists.intro sorry sorry)
+    (assume Q : (∃x, ¬ p x),
+    obtain x₁ (Q₁ : ¬ p x₁), from Q,
+    show (¬∀x, p x), from not.intro (
+        assume H₁: (∀x, p x),
+        show false, from not.elim (Q₁) (H₁ x₁)))
 
 --------------
 -- example 3
