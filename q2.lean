@@ -26,7 +26,12 @@ iff.intro
 --------------
 -- example 2
 --------------
-example: (¬∀x, p x) ↔ (∃x, ¬ p x) := sorry
+example: (¬∀x, p x) ↔ (∃x, ¬ p x) := 
+iff.intro
+    (assume H : ¬∀x, p x,
+    sorry)
+    (assume Q : ∃x, ¬ p x,
+    sorry)
 
 --------------
 -- example 3
