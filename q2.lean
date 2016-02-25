@@ -20,7 +20,7 @@ example: (∃x, p x) ↔ ¬ (∀x, ¬ p x) := sorry
 --------------
 -- example 4
 --------------
-example: (a: A) : (∃x, r → p x) ↔ (r → ∃x, p x) := sorry
+example (a: A) : (∃x, r → p x) ↔ (r → ∃x, p x) := sorry
 
 --------------
 -- example 5
