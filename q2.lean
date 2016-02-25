@@ -5,7 +5,23 @@ variable r: Prop
 --------------
 -- example 1
 --------------
-example: (∃x, p x ∨ q x) ↔ (∃x, p x) ∨ (∃x, q x) := sorry
+example: (∃x, p x ∨ q x) ↔ (∃x, p x) ∨ (∃x, q x) := 
+iff.intro
+    (assume H : ∃x, p x ∨ q x,
+    obtain x₁ H₁, from H,
+    show (∃x, p x) ∨ (∃x, q x), from or.elim H₁ 
+        (assume Hx₁ : p x₁,
+        or.inl (exists.intro x₁ Hx₁))
+        (assume Hx₁ : q x₁, 
+        or.inr (exists.intro x₁ Hx₁)))
+    (assume Q : (∃x, p x) ∨ (∃x, q x),
+    or.elim Q
+        (assume P : (∃x, p x),
+        obtain x₁ P₁, from P,
+        exists.intro x₁ (or.inl P₁))
+        (assume Q : (∃x, q x),
+        obtain x₁ Q₁, from Q,
+        exists.intro x₁ (or.inr Q₁)))
 
 --------------
 -- example 2
