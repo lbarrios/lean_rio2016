@@ -1,5 +1,5 @@
 open classical
-variables (A : type)(p q : A → Prop)
+variables (A : Type)(p q : A → Prop)
 variable r: Prop
 
 --------------
