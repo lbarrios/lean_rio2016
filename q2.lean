@@ -55,7 +55,14 @@ iff.intro
 --------------
 -- example 3
 --------------
-example: (∃x, p x) ↔ ¬ (∀x, ¬ p x) := sorry
+example: (∃x, p x) ↔ ¬ (∀x, ¬ p x) :=
+iff.intro
+    (assume H : (∃x, p x),
+    obtain x₁ H₁, from H,
+    not.intro ( assume Q: (∀x, ¬p x),
+        not.elim (Q x₁) H₁))
+    (assume nQ : ¬ (∀x, ¬p x),
+    sorry)
 
 --------------
 -- example 4
