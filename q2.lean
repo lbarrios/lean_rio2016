@@ -28,21 +28,29 @@ iff.intro
 --------------
 example: (¬∀x, p x) ↔ (∃x, ¬ p x) := 
 iff.intro
-    (assume H : ¬(∀x, p x),
+    (assume nH : ¬(∀x, p x),
     show (∃x, ¬ p x), from or.elim (em (∃x, ¬ p x))
-        (assume Q : (∃x, ¬ p x), Q)
-        (assume nQ : ¬(∃x, ¬ p x),
-        have nH : (∀x, p x), from sorry,
---            (take x,
---            assume P : ¬ p x,
---            have Q: (∃x, ¬ p x), from exists.intro x P,
---            show false, from sorry sorry),
-        absurd nH H))
-    (assume Q : (∃x, ¬ p x),
-    obtain x₁ (Q₁ : ¬ p x₁), from Q,
+        (assume Qn : (∃x, ¬ p x), Qn)
+        (assume nQn : ¬(∃x, ¬ p x),
+        have Hnn : (∀x, ¬¬p x), from
+            (take x,
+            assume nP : ¬ p x,
+            have Qn: (∃x, ¬ p x), from exists.intro x nP,
+            show false, from nQn Qn),
+        have H : (∀x, p x), from 
+            (take x,
+            have nnP : ¬¬p x, from Hnn x,
+            have P : p x, from or.elim (em (p x))
+                (assume P, P)
+                (assume nP : ¬p x,
+                absurd nP (Hnn x)),
+            P),
+        absurd H nH))
+    (assume Qn : (∃x, ¬ p x),
+    obtain x₁ (Qn₁ : ¬ p x₁), from Qn,
     show (¬∀x, p x), from not.intro (
-        assume nH: (∀x, p x),
-        show false, from not.elim (Q₁) (nH x₁)))
+        assume H: (∀x, p x),
+        show false, from not.elim (Qn₁) (H x₁)))
 
 --------------
 -- example 3
