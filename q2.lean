@@ -1,3 +1,8 @@
+/-
+Question 2. Prove the following four identities, and determine are nonconstructive,
+and hence require some form of classical reasoning.
+Replace the 'sorry' placeholders by actual proofs.
+-/
 open classical
 variables (A : Type)(p q : A → Prop)
 variable r: Prop
