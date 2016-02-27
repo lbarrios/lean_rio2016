@@ -75,9 +75,41 @@ iff.intro
 --------------
 -- example 4
 --------------
-example (a: A) : (∃x, r → p x) ↔ (r → ∃x, p x) := sorry
+example (a: A) : (∃x, r → p x) ↔ (r → ∃x, p x) := 
+iff.intro
+    (assume P: (∃x, r → p x),
+    obtain x (Hrpx: r → p x), from P,
+    assume Hr : r,
+    have Hpx: p x, from Hrpx Hr,
+    exists.intro x Hpx)
+    (assume Q : r → (∃x, p x),
+    show ∃x, r → p x, from or.elim (em r)
+        (assume Hr: r,
+        have eHpx: (∃x, p x), from Q Hr,
+        obtain x Hpx, from eHpx,
+        have Hrpx : r → p x, from
+            (assume r, Hpx),
+        exists.intro x Hrpx)
+        (assume Hnr: ¬r,
+        have fP : (∀x, r → p x), from 
+            (take x: A,
+            assume Hr: r,
+            absurd Hr Hnr),
+        exists.intro a (
+            assume Hr: r,
+            have Hpa : p a, from (fP a Hr),
+            Hpa)))
 
 --------------
 -- example 5
 --------------
-example: (∃x: A, true) → (∀x, p x ∧ r) → (∀x, p x) ∧ r := sorry
+example: (∃x: A, true) → (∀x, p x ∧ r) → (∀x, p x) ∧ r :=
+assume H₁ : (∃x: A, true),
+assume H₂ : (∀x, p x ∧ r),
+obtain x₀ T₀, from H₁,
+have H₃ : p x₀ ∧ r, from H₂ x₀,
+have Hpx : p x₀, from and.left H₃,
+have Hr : r, from and.right H₃,
+have Hapx : (∀x, p x), from 
+    (take x, and.left (H₂ x)),
+show (∀x, p x) ∧ r, from and.intro Hapx Hr
