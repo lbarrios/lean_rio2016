@@ -59,10 +59,18 @@ example: (∃x, p x) ↔ ¬ (∀x, ¬ p x) :=
 iff.intro
     (assume H : (∃x, p x),
     obtain x₁ H₁, from H,
-    not.intro ( assume Q: (∀x, ¬p x),
-        not.elim (Q x₁) H₁))
-    (assume nQ : ¬ (∀x, ¬p x),
-    sorry)
+    not.intro ( assume Qn: (∀x, ¬p x),
+        not.elim (Qn x₁) H₁))
+    (assume nQn : ¬ (∀x, ¬p x),
+    show (∃x, p x), from or.elim (em (∃x, p x))
+        (assume H : (∃x, p x), H)
+        (assume nH : ¬(∃x, p x),
+        have Qn : (∀x, ¬p x), from
+            (take x,
+            assume P : p x,
+            have H: (∃x, p x), from exists.intro x P,
+            show false, from nH H),
+        absurd Qn nQn))
 
 --------------
 -- example 4
