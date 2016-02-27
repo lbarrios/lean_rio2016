@@ -1,3 +1,9 @@
+/-
+Question 1. Prove the following assertions in propositional logic.
+Prove as many as you can, to replace the 'sorry' placeholders by actual proofs.
+Some of then require classical reasoning.
+-/
+
 open classical
 variables p q r s: Prop
 
@@ -6,7 +12,7 @@ variables p q r s: Prop
 --------------
 example: p ∧ (q∨r) ↔ (p∧q) ∨ (p∧r) := 
 iff.intro
--- proof of →:
+-- proof of (→):
 (assume H₁ : p ∧ (q∨r),
     have Hp : p, from and.left H₁,
     have Hqvr : (q∨r), from and.right H₁,
@@ -18,7 +24,7 @@ iff.intro
             -- if r, then p∧r, then (p∧r) ∨ any
             show (p∧q) ∨ (p∧r), from or.intro_right (p∧q) (and.intro Hp Hr))
 )
--- proof of ←:
+-- proof of (←):
 (assume H₂ : (p∧q) ∨ (p∧r),
     -- proof of p
     have Hp : p, from or.elim H₂ 
