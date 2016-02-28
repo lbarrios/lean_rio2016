@@ -20,11 +20,11 @@ variables p q r s: Prop
 
 example: p ∧ (q∨r) ↔ (p∧q) ∨ (p∧r) := sorry
 
-example: ¬p∨¬q → ¬(p∧q) :=
+example: ¬p∨¬q → ¬(p∧q) := sorry
 
-example: (¬q → ¬p) → (p → q) :=
+example: (¬q → ¬p) → (p → q) := sorry
 
-example: (p → r ∨ s) → ((p → r) ∨ (p → s)) :=
+example: (p → r ∨ s) → ((p → r) ∨ (p → s)) := sorry
 ```
 ##### Question 2.
 Prove the following four identities, and determine are nonconstructive, and hence require some form of classical reasoning. Replace the 'sorry' placeholders by actual proofs.
